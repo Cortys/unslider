@@ -2,6 +2,7 @@
  *   Unslider by @idiot and @damirfoy
  *   Contributors:
  *   - @ShamoX
+ *   - @luopio
  *
  */
 
@@ -28,7 +29,8 @@
 			items: '>ul',   // slides container selector
 			item: '>li',    // slidable items selector
 			easing: 'swing',// easing function to use for animation
-			autoplay: true  // enable autoplay on initialisation
+			autoplay: true, // enable autoplay on initialisation
+			setheight: true // enable setting height automatically based on content height
 		};
 
 		_.init = function(el, o) {
@@ -59,7 +61,8 @@
 			_.i = 0;
 
 			//  Set the main element
-			el.css({width: _.max[0], height: li.first().outerHeight(), overflow: 'hidden'});
+			el.css({width: _.max[0], overflow: 'hidden'});
+			o.setheight && el.css({height: li.first().outerHeight()});
 
 			//  Set the relative widths
 			ul.css({position: 'relative', left: 0, width: (len * 100) + '%'});
@@ -108,7 +111,7 @@
 						var styl = {height: li.eq(_.i).outerHeight()},
 							width = el.outerWidth();
 
-						ul.css(styl);
+						o.setheight && ul.css(styl);
 						styl['width'] = Math.min(Math.round((width / el.parent().width()) * 100), 100) + '%';
 						el.css(styl);
 					}, 50);
